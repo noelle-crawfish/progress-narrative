@@ -1,0 +1,16 @@
+{
+  "Health": {
+    "HR": {
+
+    }
+  },
+  "Nutrition" : [
+    "Calories",
+    "Protien",
+    "Carbs",
+    "Fats"
+  ],
+  "Activities" : {
+
+  }
+}
