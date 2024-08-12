@@ -17,7 +17,7 @@ fun = [
 with open("../secrets.json") as secrets:
     api_token = json.load(secrets)["toggl-track"]["api-token"]
 
-prefix = f"curl -u {api_token}:api_token https://api.track.toggl.com/api/v9/me"
+# prefix = f"curl -u {api_token}:api_token https://api.track.toggl.com/api/v9/me"
 
 # auth = f"{api_token}:api_token"
 
