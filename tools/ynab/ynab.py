@@ -59,6 +59,9 @@ if __name__=="__main__":
     for year in range(2024, now.year + 1):
         data[year] = {}
         for month in range(1, 12 + 1):
+            if year == now.year and month < 7:
+                continue
+
             monthly_stats = get_monthly_stats(month=month, year=year, budget_id=budget_id)
             data[year][month] = monthly_stats
 
