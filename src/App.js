@@ -7,13 +7,13 @@ import Social from './routes/social.jsx'
 import Datasheet from './routes/datasheet.jsx'
 
 import {
-       createBrowserRouter,
-       RouterProvider,
+  createHashRouter,
+  RouterProvider,
 } from "react-router-dom";
 
 function App() {
 
-  const router = createBrowserRouter([
+  const router = createHashRouter([
     {
       path: "/",
       element: <Home />,
