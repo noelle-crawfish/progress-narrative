@@ -4,6 +4,8 @@ import json
 import requests
 import os.path
 
+RESEARCH_PROJECT_ID = 202873184
+
 productive = [
     'Research',
     'Chores'
@@ -70,8 +72,15 @@ def get_monthly_entries(year: int, month: int):
         "start_date":f"{year}-{month:02d}-01", # 1 yr ago
         "end_date":f"{year+1 if month == 12 else year}-{(1 if month == 12 else month+1):02d}-01"
     }
-    print(params)
     time_entries = requests.get(f"{url}/time_entries", headers=headers, auth=auth, params=params).json()
+    if type(time_entries) != dict:
+        return {}
+
+    for i in range(len(time_entries)):
+        print(time_entries[i])
+        time_entries[i] = json.loads(time_entries[i])
+        if time_entries[i]['project_id'] == RESEARCH_PROJECT_ID:
+            time_entries[i]['description'] = 'Research'
     return time_entries
 
 if __name__=="__main__":
