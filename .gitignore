@@ -26,3 +26,5 @@ yarn-error.log*
 tools/secrets.json
 tools/*.json
 tools/ynab/*.json
+tools/toggl/*.json
+tools/toggl/months/*.json

@@ -51,7 +51,10 @@ export default class Time extends Component {
         const year = 2024;
 
         const filename = 'toggl-' + year.toString() + '-' + month.toString() + '.json';
+        // let raw_data = await fetch(process.env.PUBLIC_URL + '/toggl/months/' + filename).then(response => response);
         let raw_data = await fetch(process.env.PUBLIC_URL + '/toggl/months/' + filename).then(response => response.json());
+        console.log(filename);
+        console.log(raw_data);
 
         let data = []
         for(const entry of raw_data) {
