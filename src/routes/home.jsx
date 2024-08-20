@@ -7,6 +7,7 @@ export default class Home extends Component {
             <div>
                <p>Homepage, insert interesting stuff here</p>
                 <ul>
+                    <li><Link to="/excercise">Health</Link></li>
                     <li><Link to="/time">Time</Link></li>
                     <li><Link to="/money">Money</Link></li>
                     <li><Link to="/social">Social</Link></li>

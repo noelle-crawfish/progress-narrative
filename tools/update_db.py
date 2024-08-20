@@ -13,8 +13,8 @@ def rename(db, old_label, new_label):
             del db[date][old_label]
 
 def update_cronometer_data(username: str, password: str) -> None:
-    # password = password.replace('$', '\\$') # go recognizes $ as a special char, so it may need replacing if present
-    # os.system(f"cd cronometer && go run cronometer.go {username} {password}")
+    password = password.replace('$', '\\$') # go recognizes $ as a special char, so it may need replacing if present
+    os.system(f"cd cronometer && go run cronometer.go {username} {password}")
 
     labels, data = None, {}
     with open("./cronometer/cronometer.csv") as csvfile:

@@ -24,6 +24,7 @@ yarn-error.log*
 
 # custom
 tools/secrets.json
+tools/GarminDB
 tools/*.json
 tools/ynab/*.json
 tools/toggl/*.json
