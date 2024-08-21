@@ -48,6 +48,7 @@ export default class CalorieChart extends Component {
 
     const options = {
       stacked: false,
+      spanGaps: true,
       scales: {
         calories: {
           type: 'linear',

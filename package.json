@@ -4,6 +4,9 @@
   "homepage": "https://noelle-craw.fish/progress-narrative/",
   "private": true,
   "dependencies": {
+    "@devexpress/dx-react-core": "^4.0.8",
+    "@devexpress/dx-react-scheduler": "^4.0.8",
+    "@devexpress/dx-react-scheduler-material-ui": "^4.0.8",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-brands-svg-icons": "^6.5.2",
     "@fortawesome/free-regular-svg-icons": "^6.5.2",
@@ -16,11 +19,13 @@
     "chart.js": "^4.4.3",
     "papaparse": "^5.4.1",
     "react": "^18.3.1",
+    "react-calendar-heatmap": "^1.9.0",
     "react-chartjs-2": "^5.2.0",
     "react-checkbox-tree": "^1.8.0",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.0",
     "react-scripts": "5.0.1",
+    "react-tooltip": "^5.28.0",
     "rsuite": "^5.64.2",
     "web-vitals": "^2.1.4"
   },
