@@ -38,11 +38,17 @@ export default class Time extends Component {
     constructor(props) {
         super(props);
 
+        let today = new Date();
+        let dd = String(today.getDate()).padStart(2, '0');
+        let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        let yyyy = today.getFullYear();
+
+
         this.state = {
             // month: 8,
             // year: 2024,
             data: [],
-            currentDate: '2024-08-13',
+            currentDate: (mm + '-' + dd + '-' + yyyy),
         };
     }
 
@@ -70,7 +76,7 @@ export default class Time extends Component {
                 <Paper>
                     <Scheduler data={this.state.data}>
                         <ViewState currentDate={this.state.currentDate} onCurrentDateChange={(newDate) => {this.setState({ currentDate : newDate })} }/>
-                        <WeekView startDayHour={4} endDayHour={24} />
+                        <WeekView startDayHour={0} endDayHour={24} />
 
                         <Toolbar />
                         <DateNavigator />
