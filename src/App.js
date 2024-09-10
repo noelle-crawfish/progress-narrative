@@ -1,5 +1,7 @@
 // import Home from './Home.js'
 
+import NavBar from './component/NavBar.js'
+
 import Home from './routes/home.jsx'
 import Excercise from './routes/excercise.jsx'
 import Nutrition from './routes/nutrition.jsx'
@@ -29,16 +31,24 @@ function App() {
       element: <Nutrition />,
     },
     {
-      path: "/time",
+      path: "/health-stats",
+      element: <Nutrition />,
+    },
+    {
+      path: "/calendar",
       element: <Time />,
     },
     {
-      path: "/money",
-      element: <Money />,
+      path: "/productivity",
+      element: <Time />,
     },
     {
       path: "/social",
       element: <Social />,
+    },
+    {
+      path: "/money",
+      element: <Money />,
     },
     {
       path: "/datasheet",
@@ -48,6 +58,7 @@ function App() {
 
   return (
     <div>
+      <NavBar />
       <RouterProvider router={router} />
     </div>
   );
