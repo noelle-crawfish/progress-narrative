@@ -13,6 +13,10 @@ garmindb_cli.py --all --download --import --analyze --latest
 cd garmin
 python garmin.py
 cp garmin.json ../../public/garmin.json
+cp lifting.json ../../public/excercise/
+cp yoga.json ../../public/excercise/
+cp mma.json ../../public/excercise/
+cp run.json ../../public/excercise/
 cd ..
 
 # cronometer

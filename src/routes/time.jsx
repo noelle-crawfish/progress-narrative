@@ -52,10 +52,7 @@ export default class Time extends Component {
         };
     }
 
-    async componentDidMount() {
-        const month = 8;
-        const year = 2024;
-
+    async fetchMonthData(month, year) {
         const filename = 'toggl-' + year.toString() + '-' + month.toString() + '.json';
         // let raw_data = await fetch(process.env.PUBLIC_URL + '/toggl/months/' + filename).then(response => response);
         let raw_data = await fetch(process.env.PUBLIC_URL + '/toggl/months/' + filename).then(response => response.json());
@@ -66,8 +63,16 @@ export default class Time extends Component {
         for(const entry of raw_data) {
             data.push({startDate: entry['start'], endDate: entry['stop'], title: entry['description'], color: projectColors[entry['project_id']]});
         }
-        console.log(data);
+        data = data.concat(this.state.data);
         this.setState({ data : data });
+    }
+
+    async componentDidMount() {
+        const today = new Date();
+        const month = today.getMonth()+1;
+        const year = today.getFullYear();
+
+        this.fetchMonthData(month, year);
     }
 
 	render() {

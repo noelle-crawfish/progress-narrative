@@ -7,7 +7,16 @@ from garmindb.garmindb import GarminDb, GarminSummaryDb, Attributes, Device, Dev
     MonitoringDb, Monitoring, Activities, StepsActivities, DaysSummary, Weight, Sleep, IntensityHR, MonitoringHeartRate
 from garmindb import GarminConnectConfigManager
 
+from fitfile import Sport, SubSport
+
 from sqlalchemy import Column, Integer, Date, DateTime, text
+
+LIFT_DATA_FILENAME = "lifting.csv"
+LIFT_JSON_FILENAME = "lifting.json"
+
+RUN_JSON_FILENAME = "run.json"
+MMA_JSON_FILENAME = "mma.json"
+YOGA_JSON_FILENAME = "yoga.json"
 
 gc_config = GarminConnectConfigManager()
 db_params = gc_config.get_db_params()
@@ -72,9 +81,134 @@ def get_daily_stats(ts: datetime):
 
     return daily_stats
 
+def get_running_stats(ts: datetime):
+    running_stats = {}
+    all_runs = Activities.get_by_sport(activities_db, "running")
+
+    for run in all_runs:
+        date = run.start_time.date().strftime('%Y-%m-%d') # TODO zero out hour, min, sec
+
+        if date not in running_stats:
+            running_stats[date] = []
+
+        time = run.elapsed_time
+        time = time.hour + time.minute / 60 + time.second / 3600
+
+        run_stats = {
+            "elapsed_time": time,
+            "avg_speed": run.avg_speed, # TODO what is the unit on this
+            "avg_hr": run.avg_hr,
+            "max_hr": run.max_hr,
+            "distance": run.distance,
+            "calories": run.calories,
+            # time in zones? -> not for now
+        }
+        running_stats[date].append(run_stats)
+    return running_stats
+
+def get_lifting_stats():
+    lifting_stats = {}
+
+    all_lifting = Activities.get_by_sport(activities_db, "fitness_equipment", subsport="strength_training")
+    # TODO map date -> duration so we can easily pick up the value later
+    lift_durations = {}
+    for lift in all_lifting:
+        date = lift.start_time.date().strftime('%Y-%m-%d') # TODO zero out hour, min, sec
+        time = lift.elapsed_time
+        time = time.hour + time.minute / 60 + time.second / 36000
+        lift_durations[date] = time
+
+    with open(LIFT_DATA_FILENAME) as f:
+        labels = f.readline().strip('\n').split(',')[1:]
+        while True:
+            data = f.readline()
+            if not data:
+                break
+
+            data = data.strip('\n').split(',')
+
+            date = data[0]
+            data = {k: (None if x == '' else float(x)) for k, x in zip(labels, data[1:])}
+
+            try:
+                data["duration"] = lift_durations[date]
+            except:
+                data["duration"] = 0
+
+            lifting_stats[date] = [data]
+
+    return lifting_stats
+
+def get_mma_stats():
+    mma_stats = {}
+
+    # mma = mma + boxing + cardio (I've been using cardio for CKB)
+    all_mma = Activities.get_by_sport(activities_db, "UnknownEnumValue_80")
+    all_boxing = Activities.get_by_sport(activities_db, "boxing")
+    all_cardio = Activities.get_by_sport(activities_db, "fitness_equipment", subsport="cardio_training")
+
+    all_mma = all_mma + all_boxing + all_cardio
+
+    for session in all_mma:
+        date = session.start_time.date().strftime('%Y-%m-%d') # TODO zero out hour, min, sec
+
+        if date not in mma_stats:
+            mma_stats[date] = []
+
+        time = session.elapsed_time
+        time = time.hour + time.minute / 60 + time.second / 3600
+
+        session_stats = {
+            "duration": time,
+            "calories": session.calories,
+            "avg_hr": session.avg_hr,
+            "max_hr": session.max_hr,
+        }
+
+        mma_stats[date].append(session_stats)
+
+    return mma_stats
+
+def get_yoga_stats():
+    yoga_stats = {}
+
+    all_yoga = Activities.get_by_sport(activities_db, "training", subsport="yoga")
+
+    for yoga in all_yoga:
+        date = yoga.start_time.date().strftime('%Y-%m-%d')
+
+        if date not in yoga_stats:
+            yoga_stats[date] = []
+
+        time = yoga.elapsed_time
+        time = time.hour + time.minute / 60 + time.second / 3600
+
+        session_stats = {
+            "duration": time,
+            "calories": yoga.calories,
+            "avg_hr": yoga.avg_hr,
+            "max_hr": yoga.max_hr,
+        }
+
+        yoga_stats[date].append(session_stats)
+
+    return yoga_stats
+
 if __name__=="__main__":
 
-    end_ts = datetime.now() - timedelta(days=1)
+    end_ts = datetime.now()
+
+    # with open(LIFT_JSON_FILENAME, "w") as json_file:
+    #     json.dump(get_lifting_stats(), json_file)
+
+    # with open(RUN_JSON_FILENAME, "w") as json_file:
+    #     json.dump(get_running_stats(end_ts), json_file)
+
+    # with open(MMA_JSON_FILENAME, "w") as json_file:
+    #     json.dump(get_mma_stats(), json_file)
+
+    with open(YOGA_JSON_FILENAME, "w") as json_file:
+        json.dump(get_yoga_stats(), json_file)
 
     garmin_json = {}
     for ts in [end_ts - timedelta(days=i) for i in range(60)]:

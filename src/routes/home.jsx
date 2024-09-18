@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import StreakGrid from "../component/StreakGrid.js";
+import MoodGrid from "../component/MoodGrid.js";
 import Demo from "../component/Demo.js";
 
 export default class Home extends Component {
@@ -10,7 +10,7 @@ export default class Home extends Component {
 		return (
             <div>
                 <p>Homepage, insert interesting stuff here</p>
-                <StreakGrid />
+                <MoodGrid />
             </div>
 		)
 	}

@@ -5,6 +5,7 @@ import NavBar from './component/NavBar.js'
 import Home from './routes/home.jsx'
 import Excercise from './routes/excercise.jsx'
 import Nutrition from './routes/nutrition.jsx'
+import HealthStats from './routes/health-stats.jsx'
 import Time from './routes/time.jsx'
 import Money from './routes/money.jsx'
 import Social from './routes/social.jsx'
@@ -32,7 +33,7 @@ function App() {
     },
     {
       path: "/health-stats",
-      element: <Nutrition />,
+      element: <HealthStats />,
     },
     {
       path: "/calendar",

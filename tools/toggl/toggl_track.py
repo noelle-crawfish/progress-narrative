@@ -95,8 +95,8 @@ if __name__=="__main__":
     for year in [2024]:
         for month in range(1, 12+1):
             filename = f"months/toggl-{year}-{month}.json"
-            if os.path.exists(filename):
-                continue
+            # if os.path.exists(filename):
+            #     continue
 
             month_stats = get_monthly_entries(year, month)
             with open(filename, "w") as json_file:
