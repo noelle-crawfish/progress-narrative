@@ -1,0 +1,9 @@
+* Progress Narrative (Data Collection)
+This is a collection of all the scripts I use to aggregate and format my collected data.
+
+** Setup
+*** Cronometer
+Add your cronometer credentials to the =secrets.json= file.
+*** Garmin
+TODO.
+TODO.
