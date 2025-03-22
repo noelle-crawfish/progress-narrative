@@ -2,4 +2,8 @@
 **/*~
 **/__pycache__
 
+**/#*
+**/\.#*
+
+.env/*
 data/secrets.json

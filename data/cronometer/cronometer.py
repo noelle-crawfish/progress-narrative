@@ -23,6 +23,10 @@ def format_data():
         for row in reader:
             print(row)
 
+    # interesting statistics:
+    # - is alcohol consumed? maybe have a "days sober + avg. streak + max streak on site"
+    # - ...
+
 if __name__=="__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--start_date", type=str, required=True)

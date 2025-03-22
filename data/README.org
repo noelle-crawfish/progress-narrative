@@ -2,8 +2,8 @@
 This is a collection of all the scripts I use to aggregate and format my collected data.
 
 ** Setup
+Some setup is required to allow these scripts to authenticate with third party tracking apps.
 *** Cronometer
 Add your cronometer credentials to the =secrets.json= file.
 *** Garmin
-TODO.
-TODO.
+Follow the instructions [[https:github.com/tcgoetz/GarminDB][here]] to install GarminDB, which is used to access the Garmin API and retrieve relevant data.
