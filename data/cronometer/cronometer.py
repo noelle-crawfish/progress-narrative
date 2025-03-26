@@ -1,11 +1,13 @@
 
 import argparse
 import csv
+import json
 import os 
 
 import utils
 
-output_file = "cronometer.csv"
+api_output_file = "cronometer.csv"
+formatted_output_file = "cronometer.json"
 
 def fetch_data(start_date:str) -> None:
     username, password = utils.get_secrets("cronometer")
@@ -14,18 +16,22 @@ def fetch_data(start_date:str) -> None:
     password = password.replace("$", "\$")
 
     cmd = f"cd cronometer && go run cronometer.go --username {username} --password {password} \
-    --startDate {start_date} --outputFile {output_file}"
+    --startDate {start_date} --outputFile {api_output_file}"
     os.system(cmd)
 
 def format_data():
-    with open(f"cronometer/{output_file}", 'r') as csv_file:
+    cronometer_formatted_data = {}
+    with open(f"cronometer/{api_output_file}", 'r') as csv_file:
         reader = csv.DictReader(csv_file)
         for row in reader:
-            print(row)
+            day = row["Date"]
+            del row["Date"]
+            cronometer_formatted_data[day] = row
 
     # interesting statistics:
     # - is alcohol consumed? maybe have a "days sober + avg. streak + max streak on site"
     # - ...
+    return cronometer_formatted_data
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser()
@@ -33,5 +39,6 @@ if __name__=="__main__":
     args = parser.parse_args()
 
     # fetch_data(args.start_date)
-    format_data()
+    with open(f"cronometer/{formatted_output_file}", "w") as f:
+        json.dump(format_data(), f)
 

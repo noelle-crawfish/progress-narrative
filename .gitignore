@@ -14,3 +14,6 @@
 
 .env/*
 data/secrets.json
+data/**/*.log
+data/**/*.csv
+data/**/*.json
