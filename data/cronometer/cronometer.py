@@ -38,7 +38,7 @@ if __name__=="__main__":
     parser.add_argument("--start_date", type=str, required=True)
     args = parser.parse_args()
 
-    # fetch_data(args.start_date)
+    fetch_data(args.start_date)
     with open(f"cronometer/{formatted_output_file}", "w") as f:
         json.dump(format_data(), f)
 

@@ -1,6 +1,9 @@
 #!/bin/sh
 
-start_date="2021-03-21"
+start_date="2025-03-21"
+
+# ...
+source ../.env/bin/activate
 
 # cronometer (nutrition)
 echo -n "Updating cronometer data... "
@@ -10,7 +13,7 @@ echo "DONE"
 # garmin (health)
 # populate garmindb with new entries
 echo -n "Downloading new data for garmindb..."
-garmindb_cli.py --all --download --import --analyze --latest
+python garmin/garmindb_cli.py --all --download --import --analyze --latest
 echo "DONE"
 
 # aggregate and format useful garmin data

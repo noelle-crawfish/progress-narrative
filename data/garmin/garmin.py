@@ -1,5 +1,6 @@
 
 import argparse
+import json
 import sqlite3
 
 DB_PATH_PREFIX = "/home/noelle/HealthData/DBs"
@@ -43,6 +44,8 @@ def get_daily_stats(cur: sqlite3.Cursor) -> dict:
         "bb_max", 
         "bb_min",
         "stress_avg"
+
+        # weight -> This is added seperately
     ]
     key_str = ",".join(keys)
 
@@ -84,7 +87,8 @@ if __name__=="__main__":
     # summarydb = sqlite3.connect(f"{DB_PATH_PREFIX}/summary.db")
 
     # sleep_stats = get_sleep_stats(garmindb_cur)
-    # daily_stats = get_daily_stats(garmindb_cur)
-
+    with open("health.json", "w") as f:
+        daily_stats = get_daily_stats(garmindb_cur)
+        json.dump(daily_stats, f)
 
 
